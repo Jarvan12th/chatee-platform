@@ -24,3 +24,7 @@ npm install -D @types/bcrypt
 # Install axios
 
 npm install axios
+
+# Install react-hot-toast
+
+npm install react-hot-toast

@@ -7,6 +7,7 @@ import { FieldValues, SubmitHandler, set, useForm } from "react-hook-form";
 import AuthSocialButton from "./AuthSocialButton";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -42,7 +43,17 @@ export default function AuthForm() {
     }
     if (variant === "REGISTER") {
       // The API route is defined in @/app/api/register
-      axios.post("/api/register", data);
+      axios
+        .post("/api/register", data)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          toast.error("Something went wrong!");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   };
 
