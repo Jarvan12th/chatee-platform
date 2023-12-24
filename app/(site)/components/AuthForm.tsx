@@ -27,7 +27,7 @@ export default function AuthForm() {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
     },
