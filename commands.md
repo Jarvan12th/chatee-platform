@@ -9,3 +9,9 @@ npm install react-icons react-hook-form clsx
 # Install other dependencies
 
 npm install @tailwindcss/forms
+
+# Install Prisma, initialize it, and push the database
+
+npm install -D prisma
+npx prisma init
+npx prisma db push
