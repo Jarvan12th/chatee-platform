@@ -41,6 +41,7 @@ export default function AuthForm() {
       console.log("Logging in with", data);
     }
     if (variant === "REGISTER") {
+      // The API route is defined in @/app/api/register
       axios.post("/api/register", data);
     }
   };
