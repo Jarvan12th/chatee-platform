@@ -41,7 +41,6 @@ export default function AuthForm() {
       console.log("Logging in with", data);
     }
     if (variant === "REGISTER") {
-      console.log("Registering with", data);
       axios.post("/api/register", data);
     }
   };
