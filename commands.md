@@ -15,3 +15,12 @@ npm install @tailwindcss/forms
 npm install -D prisma
 npx prisma init
 npx prisma db push
+
+# Install NextAuth
+
+npm install next-auth@latest @prisma/client @next-auth/prisma-adapter bcrypt
+npm install -D @types/bcrypt
+
+# Install axios
+
+npm install axios
