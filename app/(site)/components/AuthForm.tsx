@@ -8,6 +8,7 @@ import AuthSocialButton from "./AuthSocialButton";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -38,8 +39,20 @@ export default function AuthForm() {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     if (variant === "LOGIN") {
-      // Next Auth Login
-      console.log("Logging in with", data);
+      signIn("credentials", { ...data, redirect: false })
+        .then((response) => {
+          if (response?.error) {
+            toast.error("Invalid credentials!");
+          } else if (response?.ok) {
+            toast.success("Successfully logged in!");
+          }
+        })
+        .catch((error) => {
+          toast.error("Something went wrong!");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
     if (variant === "REGISTER") {
       // The API route is defined in @/app/api/register
@@ -59,7 +72,20 @@ export default function AuthForm() {
 
   const socialAction = (action: string) => {
     setIsLoading(true);
-    console.log("Social action", action);
+    signIn(action, { redirect: false })
+      .then((response) => {
+        if (response?.error) {
+          toast.error("Something went wrong!");
+        } else if (response?.ok) {
+          toast.success("Successfully logged in!");
+        }
+      })
+      .catch((error) => {
+        toast.error("Something went wrong!");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
