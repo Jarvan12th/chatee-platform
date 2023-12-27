@@ -2,19 +2,31 @@
 
 import Button from "@/app/components/Button";
 import Input from "@/app/components/inputs/Input";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, set, useForm } from "react-hook-form";
 import AuthSocialButton from "./AuthSocialButton";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type Variant = "LOGIN" | "REGISTER";
 
 export default function AuthForm() {
+  // When a user logs in using one of the authentication providers configured in next-auth, the library handles the authentication process.
+  // If the authentication is successful, next-auth establishes a session for the user.
+  // The session object is automatically set and updated by next-auth.
+  const session = useSession();
+  const router = useRouter();
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const [isLoading, setIsLoading] = useState(false);
+
+  React.useEffect(() => {
+    if (session?.status === "authenticated") {
+      router.push("/users");
+    }
+  }, [session?.status, router]);
 
   const toggleVariant = useCallback(() => {
     if (variant === "LOGIN") {
@@ -45,6 +57,7 @@ export default function AuthForm() {
             toast.error("Invalid credentials!");
           } else if (response?.ok) {
             toast.success("Successfully logged in!");
+            router.push("/users");
           }
         })
         .catch((error) => {
@@ -58,8 +71,8 @@ export default function AuthForm() {
       // The API route is defined in @/app/api/register
       axios
         .post("/api/register", data)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
+          signIn("credentials", { data });
         })
         .catch((error) => {
           toast.error("Something went wrong!");
