@@ -28,3 +28,7 @@ npm install axios
 # Install react-hot-toast
 
 npm install react-hot-toast
+
+# Install next-superjson-plugin
+
+npm install next-superjson-plugin
