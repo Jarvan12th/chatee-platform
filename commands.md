@@ -32,3 +32,7 @@ npm install react-hot-toast
 # Install next-superjson-plugin
 
 npm install next-superjson-plugin
+
+# Install date-fns
+
+npm install date-fns
