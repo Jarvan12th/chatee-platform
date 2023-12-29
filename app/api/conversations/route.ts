@@ -22,6 +22,9 @@ export async function POST(request: Request) {
           name,
           isGroup,
           users: {
+            // The connect keyword is used to establish a link between the record being created or updated and existing records in another table.
+            // In relational database terms, this is often about setting up foreign key relationships (like foreign keys in a join table).
+
             connect: [
               ...members.map((member: { value: string }) => ({
                 id: member.value,
@@ -30,6 +33,8 @@ export async function POST(request: Request) {
             ],
           },
         },
+        // include: { users: true }: This part of the query instructs Prisma to also fetch and include the related users records in the response.
+        // This is useful for immediately retrieving the details of the users involved in the conversation, without needing to make a separate query.
         include: {
           users: true,
         },
