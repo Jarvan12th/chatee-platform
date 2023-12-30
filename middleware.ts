@@ -8,5 +8,5 @@ export default withAuth({
 
 // Next.js middleware does not run for API routes
 export const config = {
-  matcher: ["/users/:path*"],
+  matcher: ["/users/:path*", "/conversations/:path*"],
 };
