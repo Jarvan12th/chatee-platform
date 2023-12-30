@@ -44,7 +44,7 @@ export async function POST(request: Request) {
         id: conversationId,
       },
       data: {
-        lastMessageAt: new Date(),
+        lastMessageAt: new Date().toISOString(),
         messages: {
           connect: {
             id: newMessage.id,

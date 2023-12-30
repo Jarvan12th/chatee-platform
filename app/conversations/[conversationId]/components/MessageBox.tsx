@@ -3,9 +3,10 @@
 import Avatar from "@/app/components/Avatar";
 import { FullMessageType } from "@/app/types";
 import clsx from "clsx";
-import { format } from "date-fns";
+import { format, utcToZonedTime } from "date-fns-tz";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface MessageBoxProps {
   data: FullMessageType;
@@ -13,6 +14,11 @@ interface MessageBoxProps {
 }
 
 const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
+  const [timeZone, setTimeZone] = useState<string>("");
+  useEffect(() => {
+    setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  }, []);
+
   const session = useSession();
 
   const isOwn = session?.data?.user?.email === data?.sender?.email;
@@ -42,7 +48,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
         <div className="flex items-center gap-1">
           <div className="text-sm text-gray-500">{data.sender.name}</div>
           <div className="text-xs text-gray-400">
-            {format(new Date(data.createdAt), "p")}
+            {format(utcToZonedTime(new Date(data.createdAt), timeZone), "p")}
           </div>
         </div>
         <div className={message}>

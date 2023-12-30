@@ -33,9 +33,9 @@ npm install react-hot-toast
 
 npm install next-superjson-plugin
 
-# Install date-fns
+# Install date-fns-tz
 
-npm install date-fns
+npm install date-fns-tz
 
 # Install next-cloudinary
 

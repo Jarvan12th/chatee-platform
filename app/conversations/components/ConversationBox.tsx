@@ -4,10 +4,10 @@ import Avatar from "@/app/components/Avatar";
 import useOtherUser from "@/app/hooks/useOtherUser";
 import { FullConversationType } from "@/app/types";
 import clsx from "clsx";
-import { format } from "date-fns";
+import { format, utcToZonedTime } from "date-fns-tz";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 interface ConversationBoxProps {
   data: FullConversationType;
@@ -18,6 +18,11 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
   data,
   selected,
 }) => {
+  const [timeZone, setTimeZone] = useState<string>("");
+  useEffect(() => {
+    setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  }, []);
+
   const otherUser = useOtherUser(data);
   const session = useSession();
   const router = useRouter();
@@ -75,7 +80,10 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
             </p>
             {lastMessage?.createdAt && (
               <p className="text-xs text-gray-400 font-light">
-                {format(new Date(lastMessage.createdAt), "p")}
+                {format(
+                  utcToZonedTime(new Date(lastMessage.createdAt), timeZone),
+                  "p",
+                )}
               </p>
             )}
           </div>

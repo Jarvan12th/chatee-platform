@@ -2,8 +2,8 @@
 
 import useOtherUser from "@/app/hooks/useOtherUser";
 import { Conversation, User } from "@prisma/client";
-import { format } from "date-fns";
-import { Fragment, useMemo } from "react";
+import { format, utcToZonedTime } from "date-fns-tz";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoClose, IoTrash } from "react-icons/io5";
 import Avatar from "@/app/components/Avatar";
@@ -21,11 +21,19 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   onClose,
   data,
 }) => {
+  const [timeZone, setTimeZone] = useState<string>("");
+  useEffect(() => {
+    setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  }, []);
+
   const otherUser = useOtherUser(data);
 
   const joinedDate = useMemo(() => {
-    return format(new Date(otherUser.createdAt), "PP");
-  }, [otherUser.createdAt]);
+    return format(
+      utcToZonedTime(new Date(otherUser.createdAt), timeZone),
+      "PP",
+    );
+  }, [otherUser.createdAt, timeZone]);
 
   const title = useMemo(() => {
     return data.name || otherUser.name;
