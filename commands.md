@@ -40,3 +40,7 @@ npm install date-fns
 # Install next-cloudinary
 
 npm install next-cloudinary
+
+# Install @headlessui/react
+
+npm install @headlessui/react
