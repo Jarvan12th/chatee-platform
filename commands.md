@@ -36,3 +36,7 @@ npm install next-superjson-plugin
 # Install date-fns
 
 npm install date-fns
+
+# Install next-cloudinary
+
+npm install next-cloudinary
