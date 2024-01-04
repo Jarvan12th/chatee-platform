@@ -35,7 +35,6 @@ const Button: React.FC<ButtonProps> = ({
             py-2
             text-sm
             font-semibold
-            text-white
             focus-visible:outline
             focus-visible:outline-2
             focus-visible:outline-offset-2
