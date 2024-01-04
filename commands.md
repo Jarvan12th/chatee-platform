@@ -48,3 +48,7 @@ npm install @headlessui/react
 # Install react-select
 
 npm install react-select
+
+# Install react-spinners
+
+npm install react-spinners
