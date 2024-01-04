@@ -64,3 +64,7 @@ npm install lodash
 # Install @types/lodash
 
 npm install -D @types/lodash
+
+# Install zustand
+
+npm install zustand
