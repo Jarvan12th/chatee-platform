@@ -52,3 +52,7 @@ npm install react-select
 # Install react-spinners
 
 npm install react-spinners
+
+# Install pusher and pusher-js
+
+npm install pusher pusher-js
