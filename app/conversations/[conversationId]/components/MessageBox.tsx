@@ -7,6 +7,7 @@ import { format, utcToZonedTime } from "date-fns-tz";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import ImageModal from "./ImageModal";
 
 interface MessageBoxProps {
   data: FullMessageType;
@@ -20,6 +21,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
   }, []);
 
   const session = useSession();
+  const [imageModalOpen, setImageModalOpen] = useState<boolean>(false);
 
   const isOwn = session?.data?.user?.email === data?.sender?.email;
   const seenList = (data.seen || [])
@@ -52,8 +54,14 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
           </div>
         </div>
         <div className={message}>
+          <ImageModal
+            isOpen={imageModalOpen}
+            onClose={() => setImageModalOpen(false)}
+            src={data.image}
+          />
           {data.image ? (
             <Image
+              onClick={() => setImageModalOpen(true)}
               alt="Image"
               src={data.image}
               width={288}
