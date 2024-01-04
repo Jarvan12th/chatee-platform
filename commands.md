@@ -56,3 +56,11 @@ npm install react-spinners
 # Install pusher and pusher-js
 
 npm install pusher pusher-js
+
+# Install lodash
+
+npm install lodash
+
+# Install @types/lodash
+
+npm install -D @types/lodash
